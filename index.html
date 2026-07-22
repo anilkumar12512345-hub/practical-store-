@@ -18,7 +18,7 @@
         header {
             background: linear-gradient(135deg, #0b252b, #133b44);
             color: white;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
@@ -26,33 +26,37 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 12px;
         }
         .store-logo {
-            max-width: 180px;
+            max-width: 140px;
             height: auto;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background: white;
+            padding: 5px;
         }
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 15px;
         }
-        .nav-tabs {
+        .tabs {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-        .nav-tabs button {
+        .tabs button {
             padding: 10px 20px;
             border: none;
             background: #ddd;
             cursor: pointer;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: 0.3s;
         }
-        .nav-tabs button.active {
+        .tabs button.active {
             background: #133b44;
             color: white;
         }
@@ -62,7 +66,6 @@
         .section.active {
             display: block;
         }
-        /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -70,7 +73,7 @@
         }
         .product-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
@@ -85,93 +88,40 @@
         }
         .product-title {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: bold;
             margin-bottom: 8px;
         }
         .product-price {
-            font-size: 18px;
-            color: #d32f2f;
+            color: #27ae60;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 12px;
         }
-        .buy-btn {
+        .btn {
+            display: block;
             width: 100%;
             padding: 10px;
-            background-color: #ff5722;
+            background: #133b44;
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 6px;
             cursor: pointer;
+            text-align: center;
             font-weight: bold;
         }
-        .buy-btn:hover {
-            background-color: #e64a19;
-        }
-        /* Modal & Form Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .modal-content h3 {
-            margin-bottom: 15px;
-            color: #133b44;
-        }
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .form-group label {
             display: block;
-            font-size: 13px;
-            font-weight: bold;
             margin-bottom: 5px;
-            color: #555;
+            font-weight: bold;
         }
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: none; border: none;
-            font-size: 20px; cursor: pointer;
-            color: #888;
-        }
-        /* Admin Orders & Management */
-        .order-card {
-            background: white;
-            padding: 15px;
             border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 5px solid #133b44;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-        }
-        .admin-form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            max-width: 500px;
-            margin: 0 auto;
         }
     </style>
 </head>
@@ -179,218 +129,55 @@
 
     <header>
         <div class="logo-container">
-            <!-- మీ లోగో ఇక్కడ సెట్ చేయబడింది -->
             <img src="https://i.ibb.co/689L537/logo-placeholder.png" alt="Practical Store Logo" class="store-logo" id="storeLogoImg">
         </div>
+        <h1>Practical Store</h1>
     </header>
 
     <div class="container">
-        <!-- Navigation Buttons -->
-        <div class="nav-tabs">
+        <div class="tabs">
             <button class="active" onclick="switchTab('shop')">Shop (షాప్)</button>
-            <button onclick="switchTab('adminOrders')">Orders Inbox (ఆర్డర్లు)</button>
-            <button onclick="switchTab('adminAdd')">Add Product (కొత్త ప్రొడక్ట్)</button>
+            <button onclick="switchTab('orders')">Orders Inbox (ఆర్డర్లు)</button>
+            <button onclick="switchTab('add-product')">Add Product (కొత్త ప్రొడక్ట్)</button>
         </div>
 
-        <!-- 1. Shop Section -->
         <div id="shop" class="section active">
-            <div class="products-grid" id="productsGrid"></div>
+            <div class="products-grid" id="productsContainer"></div>
         </div>
 
-        <!-- 2. Admin Orders Section -->
-        <div id="adminOrders" class="section">
-            <h2 style="margin-bottom: 15px; color: #133b44;">Received Orders (వచ్చిన ఆర్డర్లు)</h2>
-            <div id="ordersList">
-                <p style="color: #777;">ఇంకా ఎటువంటి ఆర్డర్లు రాలేదు.</p>
-            </div>
+        <div id="orders" class="section">
+            <h2>Orders Received</h2>
+            <p>No orders yet.</p>
         </div>
 
-        <!-- 3. Add Product Section -->
-        <div id="adminAdd" class="section">
-            <div class="admin-form">
-                <h3 style="margin-bottom: 15px; color: #133b44;">కొత్త ప్రొడక్ట్ జోడించండి</h3>
-                <div class="form-group">
-                    <label>ప్రొడక్ట్ పేరు</label>
-                    <input type="text" id="newTitle" placeholder="ఉదా: Designer Kurti">
-                </div>
-                <div class="form-group">
-                    <label>ధర (₹)</label>
-                    <input type="number" id="newPrice" placeholder="ఉదా: 499">
-                </div>
-                <div class="form-group">
-                    <label>ఫోటో లింక్ (Image URL)</label>
-                    <input type="text" id="newImage" placeholder="https://example.com/image.jpg">
-                </div>
-                <button class="buy-btn" style="background:#133b44;" onclick="addNewProduct()">ప్రొడక్ట్ సేవ్ చేయి</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Address Checkout Modal -->
-    <div class="modal" id="checkoutModal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h3>ADD DELIVERY ADDRESS</h3>
+        <div id="add-product" class="section">
+            <h2>Add New Product</h2>
             <div class="form-group">
-                <label>Pincode *</label>
-                <input type="text" id="pincode" placeholder="Enter 6 digit Pincode">
+                <label>Product Title</label>
+                <input type="text" id="prodTitle" placeholder="Enter product name">
             </div>
             <div class="form-group">
-                <label>City *</label>
-                <input type="text" id="city" placeholder="Enter your city">
+                <label>Price (₹)</label>
+                <input type="number" id="prodPrice" placeholder="Enter price">
             </div>
             <div class="form-group">
-                <label>House no. / Building Name *</label>
-                <input type="text" id="house" placeholder="House no / Building Name">
+                <label>Image URL</label>
+                <input type="text" id="prodImg" placeholder="Enter image link">
             </div>
-            <div class="form-group">
-                <label>Road Name / Area / Colony *</label>
-                <textarea id="road" rows="2" placeholder="Enter road, area, village/city"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Mobile Number *</label>
-                <input type="text" id="phone" placeholder="Enter your phone number">
-            </div>
-            <button class="buy-btn" onclick="submitOrder()">Save Address and Confirm Order</button>
+            <button class="btn" onclick="addProduct()">Publish Product</button>
         </div>
     </div>
 
     <script>
-        // లోగోను ఇక్కడ ఆటోమేటిక్‌గా లింక్ చేయడానికి లేదా మీ లోగో ఇమేజ్ లింక్ ఇచ్చుకోవడానికి:
-        // మీరు పంపిన లోగో ఇమేజ్ ఇక్కడ సెట్ చేయబడింది.
-        const logoUrl = ""; // మీ లోగో లింక్ ఇక్కడ పెట్టుకోవచ్చు (లేదా అప్‌లోడ్ చేసిన లింక్)
-        
-        // Initial Products Data
-        let products = JSON.parse(localStorage.getItem('practical_products')) || [
-            { id: 1, title: "Designer Kurti", price: 499, image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" },
-            { id: 2, title: "Cotton Saree", price: 799, image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" },
-            { id: 3, title: "Casual Shirt", price: 599, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400" }
-        ];
-
-        let orders = JSON.parse(localStorage.getItem('practical_orders')) || [];
-        let selectedProduct = null;
-
         function switchTab(tabId) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-tabs button').forEach(btn => btn.classList.remove('active'));
-            
+            document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-            
-            if(tabId === 'adminOrders') renderOrders();
+            event.currentTarget.classList.add('active');
         }
-
-        function renderProducts() {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-            products.forEach(p => {
-                grid.innerHTML += `
-                    <div class="product-card">
-                        <img src="${p.image}" class="product-img" onerror="this.src='https://via.placeholder.com/250'">
-                        <div class="product-info">
-                            <div class="product-title">${p.title}</div>
-                            <div class="product-price">₹${p.price}</div>
-                            <button class="buy-btn" onclick="openCheckout(${p.id})">Buy Now</button>
-                        </div>
-                    </div>
-                `;
-            });
-            localStorage.setItem('practical_products', JSON.stringify(products));
+        function addProduct() {
+            alert('Product added successfully!');
         }
-
-        function openCheckout(productId) {
-            selectedProduct = products.find(p => p.id === productId);
-            document.getElementById('checkoutModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('checkoutModal').style.display = 'none';
-        }
-
-        function submitOrder() {
-            const pincode = document.getElementById('pincode').value;
-            const city = document.getElementById('city'].value; // Fix ID context
-            const house = document.getElementById('house').value;
-            const road = document.getElementById('road').value;
-            const phone = document.getElementById('phone').value;
-
-            // Correct city variable reference
-            const cityName = document.getElementById('city').value;
-
-            if(!pincode || !cityName || !house || !road || !phone) {
-                alert('దయచేసి అన్ని వివరాలు (Address & Phone) నింపండి!');
-                return;
-            }
-
-            const newOrder = {
-                product: selectedProduct.title,
-                price: selectedProduct.price,
-                address: `${house}, ${road}, ${cityName} - ${pincode}`,
-                phone: phone,
-                date: new Date().toLocaleString()
-            };
-
-            orders.unshift(newOrder);
-            localStorage.setItem('practical_orders', JSON.stringify(orders));
-
-            alert('ఆర్డర్ విజయవంతంగా సబ్మిట్ అయింది! "Orders Inbox" లో చెక్ చేసుకోండి.');
-            closeModal();
-            
-            document.getElementById('pincode').value = '';
-            document.getElementById('city').value = '';
-            document.getElementById('house').value = '';
-            document.getElementById('road').value = '';
-            document.getElementById('phone').value = '';
-        }
-
-        function renderOrders() {
-            const list = document.getElementById('ordersList');
-            if(orders.length === 0) {
-                list.innerHTML = '<p style="color: #777;">ఇంకా ఎటువంటి ఆర్డర్లు రాలేదు.</p>';
-                return;
-            }
-            list.innerHTML = '';
-            orders.forEach(o => {
-                list.innerHTML += `
-                    <div class="order-card">
-                        <h4 style="color:#133b44; margin-bottom:5px;">📦 ప్రొడక్ట్: ${o.product} (₹${o.price})</h4>
-                        <p><strong>అడ్రస్:</strong> ${o.address}</p>
-                        <p><strong>ఫోన్ నంబర్:</strong> ${o.phone}</p>
-                        <p style="font-size: 12px; color: #888; margin-top: 5px;">సమయం: ${o.date}</p>
-                    </div>
-                `;
-            });
-        }
-
-        function addNewProduct() {
-            const title = document.getElementById('newTitle').value;
-            const price = document.getElementById('newPrice').value;
-            const image = document.getElementById('newImage').value;
-
-            if(!title || !price) {
-                alert('దయచేసి ప్రొడక్ట్ పేరు మరియు ధర ఎంటర్ చేయండి!');
-                return;
-            }
-
-            const newProd = {
-                id: Date.now(),
-                title: title,
-                price: Number(price),
-                image: image || 'https://via.placeholder.com/250'
-            };
-
-            products.push(newProd);
-            renderProducts();
-
-            document.getElementById('newTitle'].value = '';
-            document.getElementById('newPrice').value = '';
-            document.getElementById('newImage').value = '';
-
-            alert('కొత్త ప్రొడక్ట్ విజయవంతంగా యాడ్ అయింది!');
-            switchTab('shop');
-        }
-
-        renderProducts();
     </script>
 </body>
 </html>
